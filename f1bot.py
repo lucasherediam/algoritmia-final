@@ -33,7 +33,7 @@ def itemY_prolog(relation):
     return [item['Y'] for item in result]
 
 
-def teamName(team):
+def team_name(team):
     result = list(pl.query(f'teams({team},Y)'))
     return [item['Y'] for item in result][0]
 
@@ -44,26 +44,37 @@ pl.consult("f1.pl")
 
 # Obtener los roles y aspectos desde Prolog
 teams = itemX_prolog('teams')
-# ['mclaren', 'ferrari', 'redbull', 'mercedes', 'astonmartin', 'alpine', 'rb', 'haas', 'rb', 'williams', 'kick']
+# teams: ['mclaren', 'ferrari', 'redbull', 'mercedes', 'astonmartin', 'alpine', 'haas', 'rb', 'williams', 'kick']
 types = list_unique_index('type')
-# ['time', 'color', 'character', 'football', 'music', 'crash', 'number']
+
+
+# types: ['time', 'color', 'character', 'football', 'music', 'crash', 'number']
 
 
 def get_options(type):
     results = itemY_prolog(type)
     unique_options = []
-    already_used = set() # Usamos un conjunto para la eficiencia en la comprobación de duplicados
+    already_used = set()
     for result in results:
         if result not in already_used:
             unique_options.append(result)
             already_used.add(result)
     return unique_options
 
+
 type_option = {}
 for type in types:
     result = get_options(type)
     type_option[type] = result
-# poner lo que sale del type_option
+# type_option: {'time': ['2019 o antes', 'Arranque esta temporada', 'Empece en la pandemia', 'Nunca vi Formula 1',
+# 'Desde que llego Colapinto'], 'color': ['naranja', 'rojo', 'verde agua', 'verde', 'azul', 'negro', 'otro'],
+# 'character': ['assets/images/characters/mcqueen.png', 'assets/images/characters/mate.png',
+# 'assets/images/characters/sally.png', 'assets/images/characters/dochudson.png', 'assets/images/characters/mack.png',
+# 'assets/images/characters/guido.png', 'assets/images/characters/storm.png'], 'football': ['No miro futbol', 'Boca',
+# 'River', 'Independiente', 'Racing', 'Otro'], 'music': ['Electronica', 'Rock', 'Rock nacional', 'Musica clasica',
+# 'Baladas', 'Cachengue'], 'crash': ['3 o mas veces', '2 veces en menos de un aÃ±o', '2 veces', '1 vez', 'Nunca'],
+# 'number': ['44', '33', '16', '14', '31', '43', '77', '10', '22', '4']}
+
 
 # Obtener diccionario de preguntas segun el aspecto
 def questions(type):
@@ -96,7 +107,7 @@ radio_buttons = []
 # Ejecucion para iniciar cuestionario
 main_window = tk.Tk()
 main_window.title("¿Que escuderia de formula 1 apoyar?")
-option = tk.StringVar()
+answer = tk.StringVar()
 main_window.geometry('800x450')
 frame = tk.Frame(main_window)
 frame.configure(bg="#8ecae6")
@@ -114,18 +125,18 @@ main_window.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 def show_questions(index):
-    if (index < len(types)):
+    if index < len(types):
         type = types[index]
         print("aspect: ", type)
         options = type_option[type]
         q = question[type]
 
-        # Elimina los widgets existentes
+        # Limpia lo que puede haber quedado de la pregunta anterior
         for widget in frame.winfo_children():
             widget.destroy()
-        radio_buttons.clear()  # Limpia la lista de botones de radio
+        radio_buttons.clear()
 
-        # titulo
+        # Titulo
         title = ttk.Label(frame, text=q, font=('Segoe UI', 17), background="#8ecae6")
         title.pack(pady=10)
 
@@ -140,26 +151,25 @@ def show_questions(index):
                 col = i % columns  # Columna dentro de la fila
                 image = load_image(option)
                 radio_button = ttk.Radiobutton(
-                    grid_frame, image=image, variable=option, value=option
+                    grid_frame, image=image, variable=answer, value=option
                 )
                 radio_button.image = image
                 radio_button.grid(row=row, column=col, padx=20, pady=10)
                 radio_buttons.append(radio_button)
         else:
             for option in options:
-                radio_button = ttk.Radiobutton(frame, text=option, variable=option, value=option)
+                radio_button = ttk.Radiobutton(frame, text=option, variable=answer, value=option)
                 radio_button.pack(anchor=tk.W, padx=70)
                 radio_buttons.append(radio_button)
 
-        # enviar respuesta
+        # Enviar la respuesta elegida
         def send():
-            if option.get() == "":
+            if answer.get() == "":
                 messagebox.showerror("Error", "Debes seleccionar una opción.")
             else:
-                # {'debilidad': 'Antisocial', 'futbol': 'Juego de defensor','pelea': 'Me meto a pelear','protagonismo':'No quiero ser protagonista','ayudar': 'Nunca me piden ayuda','insultos': 'Nunca me insultan'}
-                options_type[type] = option.get()
+                options_type[type] = answer.get()
                 # Reiniciar la variable respuesta para la siguiente pregunta
-                option.set("")
+                answer.set("")
                 title.pack_forget()
                 for radio_button in radio_buttons:
                     radio_button.pack_forget()
@@ -167,17 +177,19 @@ def show_questions(index):
                 show_questions(index + 1)
 
         send_button = tk.Button(main_window, text="Enviar respuesta", command=send, font=('Segoe UI', 14),
-                                 foreground="white", padx=10, pady=5, border=2, background="#023047")
+                                foreground="white", padx=10, pady=5, border=2, background="#023047")
         send_button.pack(pady=5)
         send_button.place(x=300, y=400)
 
     else:
         main_window.destroy()
 
+
 def load_image(route):
     img = Image.open(route)
     img = img.resize((100, 100))
     return ImageTk.PhotoImage(img)
+
 
 styles()
 show_questions(0)
@@ -188,11 +200,11 @@ for type in types:
     # ['debilidad', 'futbol', 'pelea', 'protagonismo', 'ayudar', 'insultos']
     # {'debilidad': 'Antisocial', 'futbol': 'Juego de defensor','pelea': 'Me meto a pelear','protagonismo':'No quiero ser protagonista','ayudar': 'Nunca me piden ayuda','insultos': 'Nunca me insultan'}
     # respuesta = 'Antisocial'
-    option = options_type[type]
+    answer = options_type[type]
     consulta = list(pl.query(type + '(X,Y)'))
     # [{'X': 'top', 'Y': 'Antisocial'}, {'X': 'jgl', 'Y': 'Hiperactivo'}, {'X': 'mid', 'Y': 'Avaricia'}, {'X': 'adc', 'Y': 'Egocentrico'}, {'X': 'sup', 'Y': 'Sensible'}]
     for item in consulta:
-        if item['Y'] == option:
+        if item['Y'] == answer:
             counter.append(item['X'])
 
 
@@ -219,7 +231,8 @@ def images_descriptions(teams):
                [sg.Text(description, auto_size_text=True, size=(35, 15), font=('Arial', 14), background_color="#8ecae6",
                         text_color="black")], ]
         col1 = [
-            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#8ecae6", pad=(0,0))]]
+            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#8ecae6",
+                      pad=(0, 0))]]
 
         if (len(descriptions) == 4 and i == 0):
             columns_2.append(sg.Column(col, element_justification='center', background_color="#8ecae6"))
@@ -272,7 +285,7 @@ for team in teams:
 total = len(counter)
 percentage = {}
 for key, value in result.items():
-    percentage[teamName(key)] = round((value / total) * 100, 2)
+    percentage[team_name(key)] = round((value / total) * 100, 2)
 
 
 # Mostrar resultados en una ventana
@@ -324,7 +337,7 @@ def final_results():
         results_window.protocol("WM_DELETE_WINDOW", on_closing)
 
         results_label = ttk.Label(results_window, text="RESULTADOS", font=('Segoe UI', 25),
-                                        background="#8ecae6")
+                                  background="#8ecae6")
         results_label.pack(pady=10)
 
         # Agregar el gráfico a la ventana de resultados
@@ -333,8 +346,8 @@ def final_results():
         canvas.get_tk_widget().pack()
 
         descriptions_button = tk.Button(results_window, text="Mostrar descripciones", command=show_descriptions,
-                                     font=('Segoe UI', 14), foreground="white", padx=10, pady=5, border=2,
-                                     background="#023047")
+                                        font=('Segoe UI', 14), foreground="white", padx=10, pady=5, border=2,
+                                        background="#023047")
         descriptions_button.pack(pady=5)
 
         descriptions_button.place(x=500, y=835)
@@ -353,5 +366,6 @@ def get_img_data(f, maxsize=(1200, 850), first=False):
         del img
         return bio.getvalue()
     return ImageTk.PhotoImage(img)
+
 
 final_results()

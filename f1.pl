@@ -103,64 +103,64 @@ number(haas, '22').
 number(mclaren, '4').
 
 description(alpine, 'Formerly known as Renault, representing French excellence.').
-description(alpine, 'Focuses on strategic long-term development.').
-description(alpine, 'Often a strong performer in midfield battles.').
-description(alpine, 'Prioritizes developing their engine technology.').
-description(alpine, 'Represents a bold brand identity in Formula 1.').
+description(alpine, 'World Championships: 2').
+description(alpine, 'Pole Positions: 20').
+description(alpine, 'https://www.formula1.com/en/teams/alpine').
+description(alpine, 'https://www.alpinecars.es/formula-1.html').
 
 description(astonmartin, 'A relatively new brand with significant ambitions.').
 description(astonmartin, 'Backed by a luxurious and prestigious image.').
-description(astonmartin, 'Focuses on steady growth and securing sponsorships.').
-description(astonmartin, 'Aims to attract top-tier drivers and engineers.').
-description(astonmartin, 'Often competes as a challenger in the midfield.').
+description(astonmartin, 'Pole Positions: 1').
+description(astonmartin, 'https://www.formula1.com/en/teams/aston-martin').
+description(astonmartin, 'https://www.astonmartinf1.com/').
 
 description(ferrari, 'The most iconic and historic team in Formula 1.').
-description(ferrari, 'Passionate fanbase often referred to as the "Tifosi".').
-description(ferrari, 'Focused on producing both chassis and power units in-house.').
-description(ferrari, 'Known for emotional highs and lows in performance.').
-description(ferrari, 'Aims to balance tradition with modern technology.').
+description(ferrari, 'World Championships: 16".').
+description(ferrari, 'Pole Positions: 253').
+description(ferrari, 'https://www.formula1.com/en/teams/ferrari').
+description(ferrari, 'https://www.ferrari.com/en-EN/formula1').
 
 description(haas, 'The only American team on the grid.').
 description(haas, 'Relies on a partnership with Ferrari for engine supply.').
-description(haas, 'Operates with a cost-effective strategy.').
-description(haas, 'Frequently fluctuates in competitiveness.').
-description(haas, 'Targets consistent points finishes as a primary goal.').
+description(haas, 'Pole Positions: 1').
+description(haas, 'https://www.formula1.com/en/teams/haas').
+description(haas, 'https://www.haasf1team.com/').
 
 description(kick, 'Historically significant, with roots dating back to F1’s inception.').
 description(kick, 'Partners with Sauber for operations and development.').
-description(kick, 'Balances tradition with modern racing ambitions.').
-description(kick, 'Known for nurturing young driver talent.').
 description(kick, 'Often competes at the lower end of the midfield.').
+description(kick, 'Pole Positions: 1').
+description(kick, 'https://www.formula1.com/en/teams/kick-sauber').
 
 description(mclaren, 'Boasts a rich history of championship wins.').
-description(mclaren, 'Recently re-emerged as a strong contender in the midfield.').
-description(mclaren, 'Invests heavily in young driver talent.').
-description(mclaren, 'Known for innovation in car design and technology.').
-description(mclaren, 'Engages fans with a vibrant and modern team image.').
+description(mclaren, 'World Championships: 9').
+description(mclaren, 'Pole positions: 164').
+description(mclaren, 'https://www.formula1.com/en/teams/mclaren').
+description(mclaren, 'https://cars.mclaren.com/es-es/legacy/mclaren-f1').
 
 description(mercedes, 'Known for its consistent performance and technical innovation.').
-description(mercedes, 'Dominated the sport during the hybrid era.').
-description(mercedes, 'Strong teamwork between drivers and engineers.').
-description(mercedes, 'Focuses heavily on aerodynamics and power unit efficiency.').
-description(mercedes, 'Often considered a benchmark for other teams.').
+description(mercedes, 'World Championships: 8').
+description(mercedes, 'Pole Positions: 133').
+description(mercedes, 'https://www.formula1.com/en/teams/mercedes').
+description(mercedes, 'https://www.mercedesamgf1.com/').
 
-description(rb, 'Serves as Red Bull’s junior team.').
+description(rb, 'Serves as Red Bulls junior team.').
 description(rb, 'A testing ground for upcoming driver talent.').
-description(rb, 'Shares technical resources with Red Bull Racing.').
-description(rb, 'Operates with a focus on development over results.').
-description(rb, 'Represents a unique blend of performance and style.').
+description(rb, 'Pole Positions: 1').
+description(rb, 'https://www.formula1.com/en/teams/racing-bulls').
+description(rb, 'https://www.visacashapprb.com/int-en').
 
 description(redbull, 'Renowned for its aggressive race strategies.').
-description(redbull, 'Emphasizes a strong aerodynamic package.').
-description(redbull, 'Consistently competes at the front of the grid.').
-description(redbull, 'Fosters a competitive driver environment.').
-description(redbull, 'Dominates circuits requiring high-speed cornering.').
+description(redbull, 'World Championships: 6').
+description(redbull, 'Pole Positions: 103').
+description(redbull, 'https://www.formula1.com/en/teams/red-bull-racing').
+description(redbull, 'https://www.redbull.com/ar-es/tags/f1').
 
 description(williams, 'A legendary team with a history of numerous championships.').
-description(williams, 'Currently undergoing a period of rebuilding and growth.').
-description(williams, 'Focuses on maximizing results with limited resources.').
-description(williams, 'Renowned for its independent and family-oriented heritage.').
-description(williams, 'Aims to return to its former glory as a top team.').
+description(williams, 'World Championships: 9').
+description(williams, 'Pole Positions: 128').
+description(williams, 'https://www.formula1.com/en/teams/williams').
+description(williams, 'https://www.williamsf1.com/').
 
 image(alpine, 'assets/images/f1-teams/alpine.png').
 image(astonmartin, 'assets/images/f1-teams/astonmartin.png').
