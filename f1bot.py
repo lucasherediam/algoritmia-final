@@ -12,6 +12,7 @@ from PIL import Image, ImageTk
 import operator
 import numpy as np
 import seaborn as sns
+import webbrowser
 
 
 def list_unique_index(relation):
@@ -212,58 +213,56 @@ for type in types:
 def images_descriptions(teams):
     descriptions = []
     images = []
+    links = []  # Lista para almacenar los enlaces de cada equipo
+
     for team in teams:
         result = list(pl.query(f"description({team}, Y)"))
         image = list(pl.query(f"image({team}, Y)"))
+        link = list(pl.query(f"link({team}, Y)"))
+
         images.append([item['Y'] for item in image])
         descriptions.append([item['Y'] for item in result])
-    print("imagenes: ", images)
+        links.append([item['Y'] for item in link][0])  # Guardar el primer enlace
+
     columns = []
-    columns_2 = []
     layout = []
-    i = len(descriptions) - 1
-    while i >= 0:
-        description = ""
-        for desc in descriptions[i]:
-            description += '-' + desc + "\n"
 
-        col = [[sg.Text(teams[i].upper(), font=('Segoe UI', 35), background_color="#8ecae6", text_color="black")],
-               [sg.Text(description, auto_size_text=True, size=(35, 15), font=('Arial', 14), background_color="#8ecae6",
-                        text_color="black")], ]
-        col1 = [
-            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#8ecae6",
-                      pad=(0, 0))]]
+    for i, team in enumerate(teams):
+        description = "\n".join([f"- {desc}" for desc in descriptions[i]])
 
-        if (len(descriptions) == 4 and i == 0):
-            columns_2.append(sg.Column(col, element_justification='center', background_color="#8ecae6"))
-            columns_2.append(sg.Column(col1, element_justification='center', background_color="black"))
-        elif (len(descriptions) == 5 and i <= 1):
-            columns_2.append(sg.Column(col, element_justification='center', background_color="#8ecae6"))
-            columns_2.append(sg.Column(col1, element_justification='center', background_color="black"))
-        else:
-            columns.append(sg.Column(col, element_justification='center', background_color="#8ecae6"))
-            columns.append(sg.Column(col1, element_justification='center', background_color="black"))
-        i -= 1
+        # Crear columnas para descripción e imagen
+        col_description = [
+            [sg.Text(team.upper(), font=('Segoe UI', 25), background_color="#8ecae6", text_color="black")],
+            [sg.Text(description, auto_size_text=True, font=('Arial', 14), background_color="#8ecae6",
+                     text_color="black")],
+            [sg.Button('Go to website', key=f'website_{i}', button_color=("white", "#023047"), border_width=2)]
+        ]
+        col_image = [
+            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#8ecae6")]
+        ]
+
+        # Agregar a las columnas
+        columns.append(sg.Column(col_description, element_justification='center', background_color="#8ecae6"))
+        columns.append(sg.Column(col_image, element_justification='center', background_color="#8ecae6"))
 
     layout.append(columns)
-    if columns_2 != []:
-        layout.append(columns_2)
-    layout.append(
-        [sg.Button('X', key='Exit',
-                   button_color=(sg.theme_background_color(), sg.theme_background_color()), border_width=0,
-                   pad=(0, 0))])
+    layout.append([sg.Button('X', key='Exit', button_color=("white", "red"), border_width=2)])
+
     window2 = sg.Window('Mi recomendación es:', layout, no_titlebar=True, grab_anywhere=True,
                         background_color="#8ecae6")
+
     while True:
         event2, values2 = window2.read()
-        print(event2, values2)
 
-        if event2 in (None, 'Exit'):
+        if event2 == 'Exit' or event2 is None:
             break
-        event2, values2 = None, None
+
+        # Abrir el enlace correspondiente al botón presionado
+        for i, link in enumerate(links):
+            if event2 == f'website_{i}':  # Botón específico para cada equipo
+                webbrowser.open(link)  # Abre el enlace en el navegador
 
     window2.close()
-    return
 
 
 def show_descriptions():
