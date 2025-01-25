@@ -16,25 +16,25 @@ import webbrowser
 
 
 def list_unique_index(relation):
+    """Obtiene una lista única de índices (X) desde una consulta Prolog de una relación unaria."""
     result = list(pl.query(relation + '(X)'))
     return [item['X'] for item in result]
 
 
-# Obtener los item X en una consulta --> relacion(X,Y)
-# Este código realiza una consulta Prolog para la relación relacion con dos variables (X e Y)
-# y luego extrae y devuelve los valores de X como una lista en Python.
-def itemX_prolog(relation):
+def item_x_prolog(relation):
+    """Obtiene los elementos X desde una consulta Prolog para una relación binaria."""
     result = list(pl.query(f'{relation}(X,Y)'))
     return [item['X'] for item in result]
 
 
-# Obtener los item Y en una consulta --> relacion(X,Y)
-def itemY_prolog(relation):
+def item_y_prolog(relation):
+    """Obtiene los elementos Y desde una consulta Prolog para una relación binaria."""
     result = list(pl.query(f'{relation}(X,Y)'))
     return [item['Y'] for item in result]
 
 
 def team_name(team):
+    """Obtiene el nombre de un equipo dado su identificador desde la base de datos Prolog."""
     result = list(pl.query(f'teams({team},Y)'))
     return [item['Y'] for item in result][0]
 
@@ -44,16 +44,15 @@ pl = Prolog()
 pl.consult("f1.pl")
 
 # Obtener los roles y aspectos desde Prolog
-teams = itemX_prolog('teams')
+teams = item_x_prolog('teams')
 # teams: ['mclaren', 'ferrari', 'redbull', 'mercedes', 'astonmartin', 'alpine', 'haas', 'rb', 'williams', 'kick']
 types = list_unique_index('type')
-
-
 # types: ['time', 'color', 'character', 'football', 'music', 'crash', 'number']
 
 
 def get_options(type):
-    results = itemY_prolog(type)
+    """Obtiene las opciones únicas para un tipo dado desde Prolog."""
+    results = item_y_prolog(type)
     unique_options = []
     already_used = set()
     for result in results:
@@ -79,9 +78,10 @@ for type in types:
 
 # Obtener diccionario de preguntas segun el aspecto
 def questions(type):
+    """Crea un diccionario de preguntas para cada tipo desde Prolog."""
     i = 0
     option = {}
-    result = itemY_prolog('question')
+    result = item_y_prolog('question')
     while i < len(result):
         option[type[i]] = result[i]
         i += 1
@@ -127,6 +127,7 @@ main_window.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 def show_questions(index):
+    """Muestra las preguntas y opciones correspondientes en la interfaz según el índice actual."""
     if index < len(types):
         type = types[index]
         print("aspect: ", type)
@@ -149,7 +150,7 @@ def show_questions(index):
             grid_frame.pack(pady=10)
 
             for i, option in enumerate(options):
-                row = i // columns  # Calcular fila (dos filas máximo)
+                row = i // columns  # Calcular fila
                 col = i % columns  # Columna dentro de la fila
                 image = load_image(option)
                 radio_button = ttk.Radiobutton(
@@ -212,6 +213,7 @@ for type in types:
 
 # Mostrar las descripciones y las imagenes de los roles
 def images_descriptions(teams):
+    """Muestra descripciones, imágenes y enlaces para los equipos recomendados."""
     descriptions = []
     images = []
     links = []  # Lista para almacenar los enlaces de cada equipo
@@ -267,20 +269,19 @@ def images_descriptions(teams):
 
 
 def show_descriptions():
+    """Determina los equipos recomendados y muestra sus descripciones y enlaces."""
     sorted_value = sorted(result.items(), key=operator.itemgetter(1))
     first_two_teams = sorted_value[-2:]
     max = []
     for team in first_two_teams:
         if team[1] != 0:
             max.append(team[0])
-    print("maximos: ", max)
     images_descriptions(max)
 
 
 result = {}
 for team in teams:
     result[team] = counter.count(team)
-# {'top': 3, 'jgl': 1, 'mid':1, 'adc':1, 'supp':0}
 
 total = len(counter)
 percentage = {}
@@ -288,18 +289,14 @@ for key, value in result.items():
     percentage[team_name(key)] = round((value / total) * 100, 2)
 
 
-# Mostrar resultados en una ventana
 def final_results():
-    if (len(options_type) == len(types)):
+    """Genera y muestra los resultados finales en una ventana, con gráficos y porcentajes."""
+    if len(options_type) == len(types):
 
-        labels = []
-        values = []
-
-        # Filtrar los valores iguales a 0.0
-        for label, value in percentage.items():
-            if value != 0.0:
-                labels.append(label)
-                values.append(value)
+        # Filtrar y ordenar los valores iguales a 0.0
+        sorted_data = sorted(percentage.items(), key=lambda item: item[1], reverse=True)
+        labels = [label for label, value in sorted_data if value != 0.0]
+        values = [value for label, value in sorted_data if value != 0.0]
 
         # Utilizar una paleta de colores para asignar un color a cada barra
         colors = sns.color_palette("husl", len(labels))
@@ -309,7 +306,8 @@ def final_results():
         x = np.arange(len(labels))  # Posiciones en el eje x
 
         # Crear la figura y los subgráficos
-        fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 7.5))
+        fig, ax1 = plt.subplots(figsize=(8, 6))
+        fig.subplots_adjust(bottom=0.2)
 
         # Gráfico de barras
         ax1.bar(x, values, width, color=colors, alpha=0.7, edgecolor='black', linewidth=1.2)
@@ -318,14 +316,10 @@ def final_results():
         ax1.set_ylabel('Porcentaje (%)')
         ax1.set_title('Gráfico de Barras')
 
-        # Gráfico de pastel
-        ax2.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
-        ax2.set_title('Gráfico de Pastel')
-
-        # Mostrar el gráfico de torespuesta en una nueva ventana
+        # Mostrar el gráfico y la lista en una nueva ventana
         results_window = tk.Tk()
         results_window.title("Resultados")
-        results_window.geometry('1200x900')
+        results_window.geometry('1200x800')
         results_window.configure(bg="#C0C0C0")
 
         def on_closing():
@@ -340,17 +334,36 @@ def final_results():
                                   background="#C0C0C0")
         results_label.pack(pady=10)
 
-        # Agregar el gráfico a la ventana de resultados
-        canvas = FigureCanvasTkAgg(fig, master=results_window)
+        # Crear un frame para dividir en dos columnas
+        main_frame = tk.Frame(results_window, bg="#C0C0C0")
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+
+        # Frame para el gráfico
+        graph_frame = tk.Frame(main_frame, bg="#C0C0C0")
+        graph_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        canvas = FigureCanvasTkAgg(fig, master=graph_frame)
         canvas.draw()
         canvas.get_tk_widget().pack()
+
+        # Frame para la lista
+        list_frame = tk.Frame(main_frame, bg="#C0C0C0")
+        list_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=20)
+
+        list_label = ttk.Label(list_frame, text="Porcentajes por equipo:", font=('Segoe UI', 18),
+                               background="#C0C0C0")
+        list_label.pack(pady=5)
+
+        for label, value in zip(labels, values):
+            item_label = ttk.Label(list_frame, text=f"{label}: {value:.2f}%", font=('Arial', 14), background="#C0C0C0")
+            item_label.pack(anchor=tk.W, pady=2)
 
         descriptions_button = tk.Button(results_window, text="Mostrar descripciones", command=show_descriptions,
                                         font=('Segoe UI', 14), foreground="white", padx=10, pady=5, border=2,
                                         background="#DC0000")
         descriptions_button.pack(pady=5)
 
-        descriptions_button.place(x=500, y=835)
+        descriptions_button.place(x=500, y=735)
 
         results_window.mainloop()
     else:
