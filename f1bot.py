@@ -93,7 +93,7 @@ def styles():
     styles.configure("TLabel", font=('Elephant', 16),
                      foreground="black", padding=15)
     styles.configure("TRadiobutton", font=('Arial', 12),
-                     foreground="black", background="#8ecae6", padding=5)
+                     foreground="black", background="#C0C0C0", padding=5)
     styles.map("TRadiobutton", foreground=[
         ("active", "red"), ("!active", "black")])
     styles.configure("TButton", font=('Arial', 12),
@@ -109,16 +109,17 @@ radio_buttons = []
 main_window = tk.Tk()
 main_window.title("¿Que escuderia de formula 1 apoyar?")
 answer = tk.StringVar()
+main_window.iconbitmap("assets/images/f1-logo.ico")
 main_window.geometry('800x450')
 frame = tk.Frame(main_window)
-frame.configure(bg="#8ecae6")
+frame.configure(bg="#C0C0C0")
 frame.pack(fill=tk.BOTH, expand=True)
 
 
 def on_closing():
     if messagebox.askokcancel("Salir", "¿Estás seguro que deseas salir?"):
         main_window.destroy()
-        sys.exit(0)
+        sys.destroy()
 
 
 # on_closing() se ejecuta cuando quiere cerrar
@@ -138,13 +139,13 @@ def show_questions(index):
         radio_buttons.clear()
 
         # Titulo
-        title = ttk.Label(frame, text=q, font=('Segoe UI', 17), background="#8ecae6")
+        title = ttk.Label(frame, text=q, font=('Segoe UI', 17), background="#DC0000")
         title.pack(pady=10)
 
         # Opciones de respuesta
         if type == "character":
             columns = len(options) // 2 + len(options) % 2  # Dividir en dos filas máximo
-            grid_frame = tk.Frame(frame, bg="#8ecae6")  # Marco para organizar en grilla
+            grid_frame = tk.Frame(frame, bg="#C0C0C0")  # Marco para organizar en grilla
             grid_frame.pack(pady=10)
 
             for i, option in enumerate(options):
@@ -178,9 +179,9 @@ def show_questions(index):
                 show_questions(index + 1)
 
         send_button = tk.Button(main_window, text="Enviar respuesta", command=send, font=('Segoe UI', 14),
-                                foreground="white", padx=10, pady=5, border=2, background="#023047")
+                                foreground="white", padx=10, pady=5, border=2, background="#DC0000")
         send_button.pack(pady=5)
-        send_button.place(x=300, y=400)
+        send_button.place(x=300, y=375)
 
     else:
         main_window.destroy()
@@ -232,24 +233,24 @@ def images_descriptions(teams):
 
         # Crear columnas para descripción e imagen
         col_description = [
-            [sg.Text(team.upper(), font=('Segoe UI', 25), background_color="#8ecae6", text_color="black")],
-            [sg.Text(description, auto_size_text=True, font=('Arial', 14), background_color="#8ecae6",
+            [sg.Text(team.upper(), font=('Segoe UI', 25), background_color="#C0C0C0", text_color="black")],
+            [sg.Text(description, auto_size_text=True, font=('Arial', 14), background_color="#C0C0C0",
                      text_color="black")],
-            [sg.Button('Go to website', key=f'website_{i}', button_color=("white", "#023047"), border_width=2)]
+            [sg.Button('Go to website', key=f'website_{i}', button_color=("white", "#DC0000"), border_width=2)]
         ]
         col_image = [
-            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#8ecae6")]
+            [sg.Image(data=get_img_data(images[i][0], maxsize=(220, 400), first=True), background_color="#C0C0C0")]
         ]
 
         # Agregar a las columnas
-        columns.append(sg.Column(col_description, element_justification='center', background_color="#8ecae6"))
-        columns.append(sg.Column(col_image, element_justification='center', background_color="#8ecae6"))
+        columns.append(sg.Column(col_description, element_justification='center', background_color="#C0C0C0"))
+        columns.append(sg.Column(col_image, element_justification='center', background_color="#C0C0C0"))
 
     layout.append(columns)
     layout.append([sg.Button('X', key='Exit', button_color=("white", "red"), border_width=2)])
 
     window2 = sg.Window('Mi recomendación es:', layout, no_titlebar=True, grab_anywhere=True,
-                        background_color="#8ecae6")
+                        background_color="#C0C0C0")
 
     while True:
         event2, values2 = window2.read()
@@ -295,10 +296,10 @@ def final_results():
         values = []
 
         # Filtrar los valores iguales a 0.0
-        for label, valor in percentage.items():
-            if valor != 0.0:
+        for label, value in percentage.items():
+            if value != 0.0:
                 labels.append(label)
-                values.append(valor)
+                values.append(value)
 
         # Utilizar una paleta de colores para asignar un color a cada barra
         colors = sns.color_palette("husl", len(labels))
@@ -313,7 +314,7 @@ def final_results():
         # Gráfico de barras
         ax1.bar(x, values, width, color=colors, alpha=0.7, edgecolor='black', linewidth=1.2)
         ax1.set_xticks(x)
-        ax1.set_xticklabels(labels, rotation=45, ha='right', fontdict={'fontsize': 12})
+        ax1.set_xticklabels(labels, rotation=30, ha='right', fontdict={'fontsize': 12})
         ax1.set_ylabel('Porcentaje (%)')
         ax1.set_title('Gráfico de Barras')
 
@@ -325,7 +326,7 @@ def final_results():
         results_window = tk.Tk()
         results_window.title("Resultados")
         results_window.geometry('1200x900')
-        results_window.configure(bg="#8ecae6")
+        results_window.configure(bg="#C0C0C0")
 
         def on_closing():
             if messagebox.askokcancel("Salir", "¿Estás seguro que deseas salir?"):
@@ -336,7 +337,7 @@ def final_results():
         results_window.protocol("WM_DELETE_WINDOW", on_closing)
 
         results_label = ttk.Label(results_window, text="RESULTADOS", font=('Segoe UI', 25),
-                                  background="#8ecae6")
+                                  background="#C0C0C0")
         results_label.pack(pady=10)
 
         # Agregar el gráfico a la ventana de resultados
@@ -346,7 +347,7 @@ def final_results():
 
         descriptions_button = tk.Button(results_window, text="Mostrar descripciones", command=show_descriptions,
                                         font=('Segoe UI', 14), foreground="white", padx=10, pady=5, border=2,
-                                        background="#023047")
+                                        background="#DC0000")
         descriptions_button.pack(pady=5)
 
         descriptions_button.place(x=500, y=835)
