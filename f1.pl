@@ -25,27 +25,27 @@ question(music, 'Que estilo de musica escuchas?').
 question(crash, 'Cuantas veces chocaste el auto?').
 question(number, 'Elegi un numero:').
 
-time(mclaren, '2019 o antes').
-time(ferrari, 'Arranque esta temporada').
-time(redbull, 'Empece en la pandemia').
+time(mclaren, 'Desde los 80/90').
+time(ferrari, 'Desde los 2000').
+time(redbull, 'Desde los 2010').
 time(mercedes, 'Empece en la pandemia').
-time(astonmartin, 'Nunca vi Formula 1').
-time(alpine, '2019 o antes').
-time(haas, 'Nunca vi Formula 1').
-time(rb, 'Nunca vi Formula 1').
-time(williams, 'Desde que llego Colapinto').
-time(kick, 'Nunca vi Formula 1').
+time(astonmartin, 'Voy a empezar esta temporada').
+time(alpine, 'Desde que llego Colapinto').
+time(haas, 'Solo vi la serie de nexflix').
+time(rb, 'Formula que?').
+time(williams, 'Desde los 90').
+time(kick, 'Solo se que van rapido los autos').
 
 color(mclaren, 'naranja').
 color(ferrari, 'rojo').
 color(mercedes, 'verde agua').
 color(astonmartin, 'verde').
-color(kick, 'verde').
-color(williams, 'azul').
+color(kick, 'verde fluo').
+color(williams, 'celeste').
 color(rb, 'azul').
 color(haas, 'negro').
 color(redbull, 'otro').
-color(alpine, 'otro').
+color(alpine, 'rosa').
 
 character(redbull, 'assets/images/characters/mcqueen.png').
 character(mclaren, 'assets/images/characters/mcqueen.png').
@@ -59,36 +59,36 @@ character(ferrari, 'assets/images/characters/guido.png').
 character(haas, 'assets/images/characters/storm.png').
 
 football(redbull, 'No miro futbol').
-football(mercedes, 'No miro futbol').
+football(mercedes, 'Racing').
 football(mclaren, 'Boca').
 football(ferrari, 'River').
 football(williams, 'Independiente').
-football(alpine, 'Racing').
-football(astonmartin, 'Racing').
-football(rb, 'Otro').
-football(haas, 'Otro').
+football(alpine, 'Estudiantes').
+football(astonmartin, 'San Lorenzo').
+football(rb, 'Argentinos Juniors').
+football(haas, 'Huracan').
 football(kick, 'Otro').
 
 music(redbull, 'Electronica').
-music(rb, 'Electronica').
-music(astonmartin, 'Rock').
-music(mclaren, 'Rock').
-music(haas, 'Rock nacional').
+music(rb, 'House').
+music(astonmartin, 'Pop').
+music(mclaren, 'Rock nacional').
+music(haas, 'Trap').
 music(mercedes, 'Musica clasica').
-music(williams, 'Musica clasica').
+music(williams, 'Rock').
 music(ferrari, 'Baladas').
-music(kick, 'Cachengue').
+music(kick, 'RKT').
 music(alpine, 'Cachengue').
 
-crash(williams, '3 o mas veces').
-crash(redbull, '3 o mas veces').
-crash(ferrari, '2 veces en menos de un año').
+crash(williams, 'El auto esta mas en el taller que en la calle').
+crash(redbull, 'Parece un autito chocador').
+crash(ferrari, '3 veces').
 crash(mercedes, '2 veces en menos de un año').
 crash(astonmartin, '2 veces').
-crash(rb, '2 veces').
-crash(haas, '1 vez').
-crash(kick, '1 vez').
-crash(alpine, 'Nunca').
+crash(rb, '1 vez').
+crash(haas, '1 vez pero me chocaron').
+crash(kick, 'Me como todos los cordones').
+crash(alpine, 'Algun que otro rayon').
 crash(mclaren, 'Nunca').
 
 number(mercedes, '44').
