@@ -39,17 +39,6 @@ def team_name(team):
     return [item['Y'] for item in result][0]
 
 
-# Crear una instancia de Pytholog y cargar las asociaciones
-pl = Prolog()
-pl.consult("f1.pl")
-
-# Obtener los roles y aspectos desde Prolog
-teams = item_x_prolog('teams')
-# teams: ['mclaren', 'ferrari', 'redbull', 'mercedes', 'astonmartin', 'alpine', 'haas', 'rb', 'williams', 'kick']
-types = list_unique_index('type')
-# types: ['time', 'color', 'character', 'football', 'music', 'crash', 'number']
-
-
 def get_options(type):
     """Obtiene las opciones únicas para un tipo dado desde Prolog."""
     results = item_y_prolog(type)
@@ -60,20 +49,6 @@ def get_options(type):
             unique_options.append(result)
             already_used.add(result)
     return unique_options
-
-
-type_option = {}
-for type in types:
-    result = get_options(type)
-    type_option[type] = result
-# type_option: {'time': ['2019 o antes', 'Arranque esta temporada', 'Empece en la pandemia', 'Nunca vi Formula 1',
-# 'Desde que llego Colapinto'], 'color': ['naranja', 'rojo', 'verde agua', 'verde', 'azul', 'negro', 'otro'],
-# 'character': ['assets/images/characters/mcqueen.png', 'assets/images/characters/mate.png',
-# 'assets/images/characters/sally.png', 'assets/images/characters/dochudson.png', 'assets/images/characters/mack.png',
-# 'assets/images/characters/guido.png', 'assets/images/characters/storm.png'], 'football': ['No miro futbol', 'Boca',
-# 'River', 'Independiente', 'Racing', 'Otro'], 'music': ['Electronica', 'Rock', 'Rock nacional', 'Musica clasica',
-# 'Baladas', 'Cachengue'], 'crash': ['3 o mas veces', '2 veces en menos de un aÃ±o', '2 veces', '1 vez', 'Nunca'],
-# 'number': ['44', '33', '16', '14', '31', '43', '77', '10', '22', '4']}
 
 
 # Obtener diccionario de preguntas segun el aspecto
@@ -100,30 +75,10 @@ def styles():
                      foreground="black", background="black", padding=5, width=20)
 
 
-question = questions(types)
-type_index = 0
-options_type = {}
-radio_buttons = []
-
-# Ejecucion para iniciar cuestionario
-main_window = tk.Tk()
-main_window.title("¿Que escuderia de formula 1 apoyar?")
-answer = tk.StringVar()
-main_window.iconbitmap("assets/images/f1-logo.ico")
-main_window.geometry('800x450')
-frame = tk.Frame(main_window)
-frame.configure(bg="#C0C0C0")
-frame.pack(fill=tk.BOTH, expand=True)
-
-
 def on_closing():
     if messagebox.askokcancel("Salir", "¿Estás seguro que deseas salir?"):
         main_window.destroy()
         sys.destroy()
-
-
-# on_closing() se ejecuta cuando quiere cerrar
-main_window.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 def show_questions(index):
@@ -194,23 +149,6 @@ def load_image(route):
     return ImageTk.PhotoImage(img)
 
 
-styles()
-show_questions(0)
-main_window.mainloop()
-
-counter = []
-for type in types:
-    # ['debilidad', 'futbol', 'pelea', 'protagonismo', 'ayudar', 'insultos']
-    # {'debilidad': 'Antisocial', 'futbol': 'Juego de defensor','pelea': 'Me meto a pelear','protagonismo':'No quiero ser protagonista','ayudar': 'Nunca me piden ayuda','insultos': 'Nunca me insultan'}
-    # respuesta = 'Antisocial'
-    answer = options_type[type]
-    consulta = list(pl.query(type + '(X,Y)'))
-    # [{'X': 'top', 'Y': 'Antisocial'}, {'X': 'jgl', 'Y': 'Hiperactivo'}, {'X': 'mid', 'Y': 'Avaricia'}, {'X': 'adc', 'Y': 'Egocentrico'}, {'X': 'sup', 'Y': 'Sensible'}]
-    for item in consulta:
-        if item['Y'] == answer:
-            counter.append(item['X'])
-
-
 # Mostrar las descripciones y las imagenes de los roles
 def images_descriptions(teams):
     """Muestra descripciones, imágenes y enlaces para los equipos recomendados."""
@@ -277,16 +215,6 @@ def show_descriptions():
         if team[1] != 0:
             max.append(team[0])
     images_descriptions(max)
-
-
-result = {}
-for team in teams:
-    result[team] = counter.count(team)
-
-total = len(counter)
-percentage = {}
-for key, value in result.items():
-    percentage[team_name(key)] = round((value / total) * 100, 2)
 
 
 def final_results():
@@ -380,5 +308,74 @@ def get_img_data(f, maxsize=(1200, 850), first=False):
         return bio.getvalue()
     return ImageTk.PhotoImage(img)
 
+
+# final_results()
+
+
+# Crear una instancia de Pytholog y cargar las asociaciones
+pl = Prolog()
+pl.consult("f1.pl")
+
+# Obtener los roles y aspectos desde Prolog
+teams = item_x_prolog('teams')
+# teams: ['mclaren', 'ferrari', 'redbull', 'mercedes', 'astonmartin', 'alpine', 'haas', 'rb', 'williams', 'kick']
+types = list_unique_index('type')
+# types: ['time', 'color', 'character', 'football', 'music', 'crash', 'number']
+
+type_option = {}
+for type in types:
+    result = get_options(type)
+    type_option[type] = result
+# type_option: {'time': ['2019 o antes', 'Arranque esta temporada', 'Empece en la pandemia', 'Nunca vi Formula 1',
+# 'Desde que llego Colapinto'], 'color': ['naranja', 'rojo', 'verde agua', 'verde', 'azul', 'negro', 'otro'],
+# 'character': ['assets/images/characters/mcqueen.png', 'assets/images/characters/mate.png',
+# 'assets/images/characters/sally.png', 'assets/images/characters/dochudson.png', 'assets/images/characters/mack.png',
+# 'assets/images/characters/guido.png', 'assets/images/characters/storm.png'], 'football': ['No miro futbol', 'Boca',
+# 'River', 'Independiente', 'Racing', 'Otro'], 'music': ['Electronica', 'Rock', 'Rock nacional', 'Musica clasica',
+# 'Baladas', 'Cachengue'], 'crash': ['3 o mas veces', '2 veces en menos de un aÃ±o', '2 veces', '1 vez', 'Nunca'],
+# 'number': ['44', '33', '16', '14', '31', '43', '77', '10', '22', '4']}
+
+question = questions(types)
+type_index = 0
+options_type = {}
+radio_buttons = []
+
+# Ejecucion para iniciar cuestionario
+main_window = tk.Tk()
+main_window.title("¿Que escuderia de formula 1 apoyar?")
+answer = tk.StringVar()
+main_window.iconbitmap("assets/images/f1-logo.ico")
+main_window.geometry('800x450')
+frame = tk.Frame(main_window)
+frame.configure(bg="#C0C0C0")
+frame.pack(fill=tk.BOTH, expand=True)
+
+# on_closing() se ejecuta cuando quiere cerrar
+main_window.protocol("WM_DELETE_WINDOW", on_closing)
+
+styles()
+show_questions(0)
+main_window.mainloop()
+
+counter = []
+for type in types:
+    # ['debilidad', 'futbol', 'pelea', 'protagonismo', 'ayudar', 'insultos']
+    # {'debilidad': 'Antisocial', 'futbol': 'Juego de defensor','pelea': 'Me meto a pelear','protagonismo':'No quiero ser protagonista','ayudar': 'Nunca me piden ayuda','insultos': 'Nunca me insultan'}
+    # respuesta = 'Antisocial'
+    answer = options_type[type]
+    consulta = list(pl.query(type + '(X,Y)'))
+    # [{'X': 'top', 'Y': 'Antisocial'}, {'X': 'jgl', 'Y': 'Hiperactivo'}, {'X': 'mid', 'Y': 'Avaricia'}, {'X': 'adc', 'Y': 'Egocentrico'}, {'X': 'sup', 'Y': 'Sensible'}]
+    for item in consulta:
+        if item['Y'] == answer:
+            counter.append(item['X'])
+
+result = {}
+for team in teams:
+    result[team] = counter.count(team)
+
+total = len(counter)
+percentage = {}
+for key, value in result.items():
+    percentage[team_name(key)] = round((value / total) * 100, 2)
 
 final_results()
