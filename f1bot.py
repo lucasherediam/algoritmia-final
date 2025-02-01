@@ -247,6 +247,7 @@ def final_results():
         # Mostrar el gráfico y la lista en una nueva ventana
         results_window = tk.Tk()
         results_window.title("Resultados")
+        results_window.iconbitmap("assets/images/f1-logo.ico")
         results_window.geometry('1200x800')
         results_window.configure(bg="#C0C0C0")
 
@@ -361,9 +362,12 @@ counter = []
 for type in types:
     answer = options_type[type]
     consulta = list(pl.query(type + '(X,Y)'))
+
     for item in consulta:
         if item['Y'] == answer:
             counter.append(item['X'])
+
+print("counter:", counter)
 
 result = {}
 for team in teams:

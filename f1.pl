@@ -27,40 +27,58 @@ question(number, 'Elegi un numero:').
 
 time(mclaren, 'Desde los 80').
 time(ferrari, 'Desde los 2000').
+time(ferrari, 'Desde los 2000').
+time(ferrari, 'Desde los 2000').
 time(mercedes, 'Desde los 2010').
+time(redbull, 'Desde los 2010').
 time(redbull, 'Desde los 2010').
 time(redbull, 'Empece en la pandemia').
 time(mercedes, 'Empece en la pandemia').
 time(astonmartin, 'Voy a empezar esta temporada').
 time(alpine, 'Desde que llego Colapinto').
+time(alpine, 'Desde que llego Colapinto').
+time(alpine, 'Desde que llego Colapinto').
 time(redbull, 'Solo vi la serie de nexflix').
+time(haas, 'Solo vi la serie de nexflix').
 time(haas, 'Solo vi la serie de nexflix').
 time(rb, 'Formula que?').
 time(kick, 'Formula que?').
 time(mclaren, 'Desde los 90').
 time(williams, 'Desde los 90').
+time(williams, 'Desde los 90').
+time(kick, 'Solo se que van rapido los autos').
 time(kick, 'Solo se que van rapido los autos').
 time(haas, 'Solo se que van rapido los autos').
 
 color(mclaren, 'naranja').
 color(ferrari, 'rojo').
+color(ferrari, 'rojo').
 color(mercedes, 'verde').
 color(astonmartin, 'verde').
+color(astonmartin, 'verde').
 color(kick, 'verde').
+color(kick, 'verde').
+color(kick, 'verde').
+color(williams, 'azul').
 color(williams, 'azul').
 color(rb, 'azul').
 color(haas, 'negro').
+color(mercedes, 'negro').
 color(mercedes, 'negro').
 color(redbull, 'otro').
 color(alpine, 'rosa').
 color(ferrari, 'blanco').
 color(mclaren, 'blanco').
+color(mclaren, 'blanco').
 
+character(redbull, 'assets/images/characters/mcqueen.png').
 character(redbull, 'assets/images/characters/mcqueen.png').
 character(mclaren, 'assets/images/characters/mcqueen.png').
 character(kick, 'assets/images/characters/mate.png').
 character(alpine, 'assets/images/characters/sally.png').
+character(alpine, 'assets/images/characters/sally.png').
 character(mercedes, 'assets/images/characters/sally.png').
+character(williams, 'assets/images/characters/dochudson.png').
 character(williams, 'assets/images/characters/dochudson.png').
 character(astonmartin, 'assets/images/characters/dochudson.png').
 character(rb, 'assets/images/characters/mack.png').
@@ -68,21 +86,32 @@ character(alpine, 'assets/images/characters/guido.png').
 character(ferrari, 'assets/images/characters/guido.png').
 character(haas, 'assets/images/characters/storm.png').
 character(redbull, 'assets/images/characters/storm.png').
+character(redbull, 'assets/images/characters/storm.png').
 
 football(redbull, 'No miro futbol').
 football(mercedes, 'Racing').
 football(mclaren, 'Boca').
 football(redbull, 'Boca').
+football(redbull, 'Boca').
+football(ferrari, 'River').
+football(ferrari, 'River').
 football(ferrari, 'River').
 football(mercedes, 'River').
+football(williams, 'Independiente').
+football(williams, 'Independiente').
 football(williams, 'Independiente').
 football(alpine, 'Estudiantes').
 football(ferrari, 'Estudiantes').
 football(astonmartin, 'San Lorenzo').
 football(rb, 'Argentinos Juniors').
+football(rb, 'Argentinos Juniors').
+football(rb, 'Argentinos Juniors').
 football(haas, 'Huracan').
 football(kick, 'Agropecuario').
+football(kick, 'Agropecuario').
 
+music(redbull, 'Electronica').
+music(redbull, 'Electronica').
 music(redbull, 'Electronica').
 music(rb, 'Electronica').
 music(rb, 'House').
@@ -90,7 +119,9 @@ music(redbull, 'House').
 music(astonmartin, 'Pop').
 music(mclaren, 'Rock nacional').
 music(haas, 'Trap').
+music(haas, 'Trap').
 music(kick, 'Trap').
+music(ferrari, 'Musica clasica').
 music(ferrari, 'Musica clasica').
 music(mercedes, 'Musica clasica').
 music(williams, 'Rock').
