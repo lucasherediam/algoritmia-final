@@ -359,12 +359,8 @@ main_window.mainloop()
 
 counter = []
 for type in types:
-    # ['debilidad', 'futbol', 'pelea', 'protagonismo', 'ayudar', 'insultos']
-    # {'debilidad': 'Antisocial', 'futbol': 'Juego de defensor','pelea': 'Me meto a pelear','protagonismo':'No quiero ser protagonista','ayudar': 'Nunca me piden ayuda','insultos': 'Nunca me insultan'}
-    # respuesta = 'Antisocial'
     answer = options_type[type]
     consulta = list(pl.query(type + '(X,Y)'))
-    # [{'X': 'top', 'Y': 'Antisocial'}, {'X': 'jgl', 'Y': 'Hiperactivo'}, {'X': 'mid', 'Y': 'Avaricia'}, {'X': 'adc', 'Y': 'Egocentrico'}, {'X': 'sup', 'Y': 'Sensible'}]
     for item in consulta:
         if item['Y'] == answer:
             counter.append(item['X'])
