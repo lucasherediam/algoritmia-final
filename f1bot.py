@@ -328,9 +328,9 @@ for t in types:
 
 
 # Obtener las preguntas asociadas a cada tipo
-question = questions(types)
-options_type = {}   # Se almacenarán las respuestas del usuario
-radio_buttons = []
+question = questions(types) # Diccionario con las preguntas asociadas a cada tipo
+options_type = {}           # Se almacenarán las respuestas del usuario
+radio_buttons = []          # Lista que almacena los botones de las opciones
 
 # Definir los pesos para cada pregunta (ajusta según la importancia deseada)
 weights = {
@@ -349,11 +349,21 @@ main_window.title("¿Qué escudería de Formula 1 apoyar?")
 answer = tk.StringVar()
 main_window.iconbitmap("assets/images/f1-logo.ico")
 main_window.geometry('800x450')
+
+# Frame donde se mostrarán las preguntas y opciones
 frame = tk.Frame(main_window, bg="#C0C0C0")
 frame.pack(fill=tk.BOTH, expand=True)
+
+# Configurar el comportamiento al cerrar la ventana
 main_window.protocol("WM_DELETE_WINDOW", on_closing)
+
+# Aplicar estilos a los widgets
 styles()
+
+# Iniciar la visuzlizacion de las preguntas
 show_questions(0)
+
+# Ejecutar la ventana principal de la aplicacion
 main_window.mainloop()
 
 
