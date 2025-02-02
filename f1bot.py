@@ -1,17 +1,22 @@
+# Modulos estandar de Python
 import sys
-import PySimpleGUI as sg
 import io
+import operator
+import webbrowser
+import numpy as np
+# Modulos para la interfaz grafica
+import PySimpleGUI as sg
 import tkinter as tk
 from tkinter import messagebox
-from pyswip import Prolog
 from tkinter import ttk
+# Modulos para Prolog
+from pyswip import Prolog
+# Modulos para manejo de imagenes
+from PIL import Image, ImageTk
+# Modulos para graficos
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from PIL import Image, ImageTk
-import operator
-import numpy as np
 import seaborn as sns
-import webbrowser
 
 
 # ===============================
