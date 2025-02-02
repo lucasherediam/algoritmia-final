@@ -75,6 +75,7 @@ def questions(types_list):
 # ===============================
 
 def styles():
+    """Configura los estilos de los widgets en la interfaz gráfica."""
     st = ttk.Style()
     st.configure("TLabel", font=('Elephant', 16), foreground="black", padding=15)
     st.configure("TRadiobutton", font=('Arial', 12),
@@ -85,6 +86,7 @@ def styles():
 
 
 def on_closing():
+    """Maneja el evento de cierre de la ventana, pidiendo confirmación antes de salir."""
     if messagebox.askokcancel("Salir", "¿Estás seguro que deseas salir?"):
         main_window.destroy()
         sys.exit()
@@ -149,12 +151,14 @@ def show_questions(index):
 
 
 def load_image(route):
+    """Carga y redimensiona una imagen desde una ruta especificada."""
     img = Image.open(route)
     img = img.resize((100, 100))
     return ImageTk.PhotoImage(img)
 
 
 def get_img_data(f, maxsize=(1200, 850), first=False):
+    """Obtiene los datos de una imagen y la convierte en un formato adecuado para su uso en la interfaz gráfica."""
     img = Image.open(f)
     img.thumbnail(maxsize)
     if first:
