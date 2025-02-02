@@ -107,8 +107,8 @@ football(rb, 'Argentinos Juniors').
 football(rb, 'Argentinos Juniors').
 football(rb, 'Argentinos Juniors').
 football(haas, 'Huracan').
-football(kick, 'Agropecuario').
-football(kick, 'Agropecuario').
+football(kick, 'Otro').
+football(kick, 'Otro').
 
 music(redbull, 'Electronica').
 music(redbull, 'Electronica').
